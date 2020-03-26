@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import ItemList from './item-list/item-list';
 import './index.css';
 
+
+const CLIENT_VERSION = '0.1';
+
 ReactDOM.render(
-  <App />,
+  <ItemList/>,
   document.getElementById('root')
 );
+

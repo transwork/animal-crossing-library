@@ -1,0 +1,7 @@
+.month-box{
+    cursor:pointer;
+}
+
+.list-item-wrapper{
+    display:flex;
+}
