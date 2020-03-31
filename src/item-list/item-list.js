@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './item-list.css';
+import DataTable from "./data-table";
 
 
 class ItemList extends React.Component {
@@ -40,26 +40,12 @@ class ItemList extends React.Component {
   render() {
 
     return (
-      <div>
-        <div>어서와요 동물의 숲 도감 v0.1</div>
-        <div>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((number) => {
-            return <label className="month-box"><input type="checkbox"/>{number}월</label>;
-          })}
+      <React.Fragment>
+        <div>어서와요 동물의 숲 도감</div>
+        <div class="data-table-container">
+          <DataTable></DataTable>
         </div>
-        <div className="list-wrapper">
-          {this.state.BOOKS.map((data) => {
-            return (
-              <div class="list-item-wrapper">
-                <div class="list-item-type">{data.type}</div>
-                <div class="list-item-discover">{data.discover}</div>
-                <div class="list-item-price">{data.price}</div>
-                <div class="list-item-size">{data.size}</div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

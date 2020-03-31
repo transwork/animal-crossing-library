@@ -5,3 +5,7 @@
 .list-item-wrapper{
     display:flex;
 }
+
+.data-table-container{
+    max-width:500px;
+}

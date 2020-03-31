@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ItemList from './item-list/item-list';
+import ItemList from './item-list/item-list.js';
 import './index.css';
-
 
 const CLIENT_VERSION = '0.1';
 
