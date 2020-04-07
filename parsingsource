@@ -1,0 +1,184 @@
+var data = [],test = [];
+i = 0;
+$0.querySelectorAll("tr").forEach((c)=>{
+
+////////////////////////////
+
+var obj = {};
+obj.etc = [];
+var tds = c.querySelectorAll("td");
+obj.type = "민물고기";
+obj.name = tds[0].querySelector("a");
+if(obj.name){
+    obj.name = obj.name.text;
+}else if(tds[0].querySelector("strong")){
+    obj.name = tds[0].querySelector("strong").innerText;
+}
+else{
+    obj.name = tds[0].childNodes[0].data;
+}
+obj.img = {url:tds[1].querySelector('.wiki-image').src};
+obj.price = parseInt(tds[6].textContent);
+obj.size = tds[5].textContent;
+obj.emergence = {};
+obj.emergence.placement = tds[4].textContent;
+obj.emergence.hour = {};
+obj.emergence.month = {};
+
+//case
+//1년 내내, xx월~xx월, xx월
+var month = tds[2].textContent;
+if(month == "1년 내내"){
+    for(var i=1;i<=12;i++){
+        obj.emergence.month[i] = true;
+    }
+}
+else if(tds[2].innerHTML.indexOf("br")>=0){
+    var ms = tds[2].innerHTML;
+    while(ms.indexOf("월")>=0){
+        ms = ms.replace("월","");
+    }
+
+    ms = ms.split("<br>");
+    var mss = ms[0].split("~");
+    mss[0] = parseInt(mss[0]);
+    mss[1] = parseInt(mss[1]);
+    //여기 데이터보고 필요한 케이스만 로직짠거라 다른종류 추가할때 확인하고 추가로직 짜야함.
+    for(var i=1;i<=12;i++){
+        if(mss[0] <= i && i <= mss[1]){
+            obj.emergence.month[i] = true;
+        }else
+            obj.emergence.month[i] = false;
+    }
+
+    var mss = ms[1].split("~");
+    mss[0] = parseInt(mss[0]);
+    mss[1] = parseInt(mss[1]);
+
+    for(var i=1;i<=12;i++){
+        if(mss[0] <= i && i <= mss[1])
+            obj.emergence.month[i] = true;
+    }
+
+    ////////////////////
+}
+else if(month.indexOf("~")>=0){
+
+    var ms = month.split("~");
+    ms[0] = parseInt(ms[0].replace("월",""));
+    ms[1] = parseInt(ms[1].replace("월",""));
+    if(ms[0] > ms[1]){
+        for(var i=1;i<=12;i++){
+            if(i >= ms[0] || i <= ms[1])
+                obj.emergence.month[i] = true;
+            else
+                obj.emergence.month[i] = false;
+        }
+    }else{
+        for(var i=1;i<=12;i++){
+            if(ms[0] <= i && i <= ms[1])
+                obj.emergence.month[i] = true;
+            else
+                obj.emergence.month[i] = false;
+        }
+    }
+}
+else if(month.indexOf("월")>=0){
+    month = parseInt(month.replace("월",""));
+    for(var i=1;i<=12;i++){
+        if(month == i)
+            obj.emergence.month[i] = true;
+        else
+            obj.emergence.month[i] = false;
+    }
+}
+else{
+    console.error("unexpected case",month);
+}
+
+var hour = tds[3].textContent;
+
+if(hour == "하루종일"){
+    for(var i=1;i<=24;i++){
+        obj.emergence.hour[i] = true;
+    }
+}
+else if(tds[3].innerHTML.indexOf("br")>=0){
+    obj.etc.push({text:"시간 특이 케이스",data:tds[3].innerHTML});
+    var hour = tds[3].innerHTML;
+    while(hour.indexOf("시")>=0){
+        hour = hour.replace("시","");
+    }
+    hour = hour.split("<br>");
+    if(hour[0].indexOf("(")>=0)
+        hour[0] = hour[0].slice(0,hour[0].indexOf("("));
+    if(hour[1].indexOf("(")>=0)
+        hour[1] = hour[1].slice(0,hour[1].indexOf("("));
+
+    console.log(hour);
+    var hs = hour[0].split("~");
+    hs[0] = parseInt(hs[0].replace("시",""));
+    hs[1] = parseInt(hs[1].replace("시",""));
+    getHours(hs).forEach((v,i)=>{
+        obj.emergence.hour[i+1] = v;
+    })
+
+    var hs = hour[1].split("~");
+    if(hour[1] == "하루종일"){
+       hs = [1,24];
+    }else{
+        hs[0] = parseInt(hs[0].replace("시",""));
+        hs[1] = parseInt(hs[1].replace("시",""));
+    }
+    getHours(hs).forEach((v,i)=>{
+        if(obj.emergence.hour[i+1] == false)
+        obj.emergence.hour[i+1] = v;
+    })
+
+}
+else if(hour.indexOf("~")>=0){
+    var hs = hour.split("~");
+    hs[0] = parseInt(hs[0].replace("시",""));
+    if(hs[1] == "하루종일"){
+       hs = [1,24];
+    }else{
+        hs[1] = parseInt(hs[1].replace("시",""));
+    }
+    getHours(hs).forEach((v,i)=>{
+        obj.emergence.hour[i+1] = v;
+    })
+}
+else if(hour.indexOf("시")>=0){
+}
+else{
+    console.error("unexpected case",hour);
+}
+
+
+////////////////////////////
+data.push(obj);
+i++;
+});
+console.log(data);
+
+function getHours(ar){
+    var s = ar[0],e = ar[1];
+    //s와 e는 절대 같을 수 있는 케이스가 존재하지 않음.
+    var arr = [];
+    if(s<e){
+        for(var i=1;i<=24;i++){
+            if(s<=i && i <=e)
+                arr.push(true);
+            else
+                arr.push(false);
+        }
+    }else{
+        for(var i=1;i<=24;i++){
+            if(s<=i || i <=e)
+                arr.push(true)
+            else
+                arr.push(false);
+        }
+    }
+    return arr;
+}

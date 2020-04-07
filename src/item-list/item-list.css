@@ -1,11 +1,54 @@
-.month-box{
-    cursor:pointer;
-}
-
-.list-item-wrapper{
+.item-list-wrapper{
     display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding:10px;
 }
 
-.data-table-container{
-    max-width:500px;
+.logo{
+    max-width: 100%;
+}
+
+.month-wrapper, .hour-wrapper{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.month-wrapper .month{
+    border:solid 1px gainsboro;
+    min-width:20px;
+    text-align: center;
+    width:20px;
+    height:20px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin:1px;
+    color:gainsboro;
+}
+
+.month-wrapper .month.on{
+    background: #88d688;
+    color: white;
+    font-weight: bold;
+}
+
+.hour-wrapper .hour{
+    border:solid 1px gainsboro;
+    min-width:20px;
+    text-align: center;
+    width:20px;
+    height:20px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin:1px;
+    color:gainsboro;
+}
+
+.hour-wrapper .hour.on{
+    background: #88d688;
+    color: white;
+    font-weight: bold;
 }

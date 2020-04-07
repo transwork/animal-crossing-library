@@ -10,7 +10,8 @@
     "semantic-ui-react": "^0.88.2"
   },
   "devDependencies": {
-    "electron": "^8.2.0"
+    "electron": "^8.2.0",
+    "json-loader": "^0.5.7"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -4,48 +4,18 @@ import DataTable from "./data-table";
 
 
 class ItemList extends React.Component {
-  /*
-  type:['물고기','식물'],
-  period:{m1...m12,h1...h24},
-  discover:["강","연못"]
-  */
-  constructor() {
-    super();
-    const BOOKS = [
-      {
-        type: "물고기",
-        period: {
-          m1: true,
-          m2: true,
-          m3: true,
-          m4: false,
-          m5: false,
-          m6: false,
-          m7: false,
-          m8: false,
-          m9: false,
-          m10: false,
-          m11: true,
-          m12: true,
-          h1: true
-        },
-        discover: "강",
-        price: 900,
-        size: 1
-      }
-    ];
-    this.state = {BOOKS: BOOKS};
-  }
-
   render() {
 
     return (
-      <React.Fragment>
-        <div>어서와요 동물의 숲 도감</div>
-        <div class="data-table-container">
+      <div className="item-list-wrapper">
+        {/*<img*/}
+        {/*  className="logo"*/}
+        {/*  src="https://w.namu.la/s/1cf323b3e7b85343142ce18d3893c7fe882b39451070db6bc5cd0d3d8f5daec6db7d8b4ab55f2e46506b50b6f3ad481734d188ca3001fb71b53ebd6abf7a5df5fc27c2bb1149e2683f02853dd0b872822d6670ea5616e04be6d93d9decd02088"/>*/}
+
+        <div className="data-table-container">
           <DataTable></DataTable>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
